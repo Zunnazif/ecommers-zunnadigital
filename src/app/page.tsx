@@ -80,7 +80,7 @@ export default function Home() {
     <>
       <div className="flex flex-wrap justify-center px-1 pt-4">
         <Cards data={data} />
-        <div className="bg-gray-600 p-3 rounded-full fixed mt-[500px] ml-72">
+        <div className="bg-gray-600 p-3 rounded-full fixed bottom-6 end-6">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             height="16"
