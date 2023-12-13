@@ -13,7 +13,12 @@ export default function Cards({ data }: { data: any }) {
               <p className="text-[50%] font-semibold text-red-600">51%</p>
               <p className="text-[40%] text-white">OFF</p>
             </span>
-            <Image src={item.linkPage} alt={`page-${item.sku}`} />
+            <Image
+              width={500}
+              height={500}
+              src={item.linkPage}
+              alt={`page-${item.sku}`}
+            />
             <div className="content text-white mt-2 px-1">
               <p className="text-[60%] truncate ">
                 {item.sku}. {item.bookName}
