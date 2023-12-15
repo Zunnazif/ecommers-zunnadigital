@@ -1,4 +1,5 @@
 import Cards from "@/components/fragments/Cards";
+import Cart from "@/components/fragments/Cart";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 
 export default function Home() {
@@ -79,14 +80,18 @@ export default function Home() {
 
   return (
     <>
-      <div className="flex flex-wrap justify-center">
+      <div className="flex flex-wrap justify-center gap-2">
         <Cards data={data} />
-        <div className="bg-gray-600 w-10 h-10 rounded-full fixed bottom-6 end-6 flex justify-center items-center">
-          <ShoppingCartRoundedIcon />
-          <span className="bg-red-700 fixed bottom-[52px] end-5 w-5 h-5 rounded-full flex justify-center items-center">
-            <p className="text-xs font-semibold text-white">1</p>
-          </span>
-        </div>
+        <Cart
+          cart={
+            <>
+              <ShoppingCartRoundedIcon className="text-white" />
+              <span className="bg-red-700 fixed bottom-[52px] end-5 w-5 h-5 rounded-full flex justify-center items-center">
+                <p className="text-xs font-semibold text-white">17</p>
+              </span>
+            </>
+          }
+        />
       </div>
     </>
   );

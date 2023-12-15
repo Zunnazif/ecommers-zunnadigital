@@ -7,7 +7,7 @@ export default function Cards({ data }: { data: any }) {
         return (
           <div
             key={item.sku}
-            className="max-w-[40%] sm:max-w-[18%] lg:max-w-[12%] bg-slate-950 rounded-md shadow-md m-1.5"
+            className="max-w-[40%] sm:max-w-[18%] lg:max-w-[12%] bg-slate-950 rounded-md shadow-md"
           >
             <span className="bg-yellow-500 px-0.5 absolute ml-0.5 rounded-ss-md">
               <p className="text-[50%] font-semibold text-red-600">51%</p>
