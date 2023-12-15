@@ -67,16 +67,6 @@ export default function Modal({ cart }: { cart: React.ReactNode }) {
     },
   ];
 
-  function deleteObj(id: { id: number }) {
-    console.log(id);
-    dataArr.filter((item) => {
-      if (item.sku != id) {
-        dataArr = item;
-      }
-    });
-  }
-
-  console.log("second", dataArr);
   return (
     <>
       <div
@@ -157,11 +147,7 @@ export default function Modal({ cart }: { cart: React.ReactNode }) {
                             <p className="text-[9px] mt-0.5">x1</p>
                           </div>
                           <div className="flex items-center text-center text-gray-200">
-                            <ClearIcon
-                              onClick={() => {
-                                return deleteObj(item.sku);
-                              }}
-                            />
+                            <ClearIcon />
                           </div>
                         </div>
                       </li>
