@@ -1,71 +1,35 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
 import ClearIcon from "@mui/icons-material/Clear";
+import Checkout from "./Checkout";
 
-export default function Modal({ cart }: { cart: React.ReactNode }) {
+export default function Modal({
+  cart,
+  cartData,
+  cancelHandler,
+}: {
+  cart: React.ReactNode;
+  cartData: any[];
+  cancelHandler: Function;
+}) {
   const [show, setShow] = useState("hidden");
 
-  let dataArr = [
-    {
-      sku: 101,
-      bookName: "Cantik Itu Luka - Eka Kurniawan",
-      link: "https://drive.google.com/file/d/1IAuxhflFbztSXqqpwvnyV9KL7V4OzKel/view?usp=drive_link",
-      linkPage:
-        "https://raw.githubusercontent.com/Zunnazif/halaman-produk/main/halaman-produk/101.jpg",
-    },
-    {
-      sku: 104,
-      bookName: "Re dan peREmpuan",
-      link: "https://drive.google.com/file/d/1HEPzCaSwdc2keZS-H0f_KhNySPmX-lPX/view?usp=drive_link",
-      linkPage:
-        "https://raw.githubusercontent.com/Zunnazif/halaman-produk/main/halaman-produk/104.jpg",
-    },
-    {
-      sku: 107,
-      bookName:
-        "Funiculi Funicula Before the Coffee Gets Cold by Toshikazu Kawaguchi",
-      link: "https://drive.google.com/file/d/16crDQ35YlPVnRH7Ah1BBFHq2Osyr96Zm/view?usp=drive_link",
-      linkPage:
-        "https://raw.githubusercontent.com/Zunnazif/halaman-produk/main/halaman-produk/107.jpg",
-    },
-    {
-      sku: 113,
-      bookName: "Bulan by Tere Liye",
-      link: "https://drive.google.com/file/d/1msTK8REeY56uhpaU6-qHFYwu2AdUrpo7/view?usp=drive_link",
-      linkPage:
-        "https://raw.githubusercontent.com/Zunnazif/halaman-produk/main/halaman-produk/113.jpg",
-    },
-    {
-      sku: 114,
-      bookName: "Bumi by Tere Li",
-      link: "https://drive.google.com/file/d/1CxGBsi3KNjN0NMDzzZXNldZNvTkzRt4J/view?usp=drive_link",
-      linkPage:
-        "https://raw.githubusercontent.com/Zunnazif/halaman-produk/main/halaman-produk/114.jpg",
-    },
-    {
-      sku: 115,
-      bookName: "Ceros dan Batozar by Tere Liye",
-      link: "https://drive.google.com/file/d/1EsFsmzGftQvBOVRfZS812qTlfW_Nwri0/view?usp=drive_link",
-      linkPage:
-        "https://raw.githubusercontent.com/Zunnazif/halaman-produk/main/halaman-produk/115.jpg",
-    },
-    {
-      sku: 118,
-      bookName: "Hujan by Tere Liye",
-      link: "https://drive.google.com/file/d/14cyoisAjSJHX6n3v8VtT42l1iDx0N6Lz/view?usp=drive_link",
-      linkPage:
-        "https://raw.githubusercontent.com/Zunnazif/halaman-produk/main/halaman-produk/118.jpg",
-    },
-    {
-      sku: 119,
-      bookName: "Hello by Tere Li",
-      link: "https://drive.google.com/file/d/1lhXAaP0aNElkk4vwti5acAZpU1EMfFQo/view?usp=drive_link",
-      linkPage:
-        "https://raw.githubusercontent.com/Zunnazif/halaman-produk/main/halaman-produk/119.jpg",
-    },
-  ];
+  let totalPrice = cartData
+    .map((item) => item.price)
+    .reduce((acc, num) => acc + num, 0);
+
+  let copyOrder = () => {
+    let copyContent = cartData
+      .map((x) => {
+        return x.sku;
+      })
+      .join(" ");
+
+    navigator.clipboard.writeText(copyContent);
+
+    alert("Pesanan sudah dicopy ^_^");
+  };
 
   return (
     <>
@@ -81,7 +45,7 @@ export default function Modal({ cart }: { cart: React.ReactNode }) {
         aria-hidden="true"
         className={`${show} flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50  w-full md:inset-0 h-[calc(100%-1rem)] max-h-full`}
       >
-        <div className="relative p-4 w-full max-w-sm max-h-full">
+        <div className="relative p-4 w-full max-w-sm md:max-w-[400px] max-h-full">
           {/* <!-- Modal content --> */}
           <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
             {/* <!-- Modal header --> */}
@@ -116,40 +80,29 @@ export default function Modal({ cart }: { cart: React.ReactNode }) {
             {/* <!-- Modal body --> */}
             <div className="p-3 md:p-5 space-y-1">
               <ul>
-                {dataArr.map(
+                {cartData.map(
                   (
                     item: {
                       linkPage: string;
                       sku: number;
                       bookName: string;
+                      price: number;
                     },
                     index
                   ) => {
                     return (
                       <li key={index} className="mb-1">
-                        <div className="bg-gray-400 rounded-lg flex h-16 w-full">
-                          <Image
-                            priority={true}
-                            src={item.linkPage}
-                            width={60}
-                            height={60}
-                            alt={"page-" + item.sku}
-                            className="rounded-lg w-16 h-16"
-                          />
-
-                          <div className="p-1 pl-3">
-                            <h3 className="text-[11px] w-[200px] truncate font-semibold">
-                              {item.sku}. {item.bookName}
-                            </h3>
-                            <p className="text-xs mt-0.5 font-semibold text-red-600">
-                              Rp<span>980</span>
-                            </p>
-                            <p className="text-[9px] mt-0.5">x1</p>
+                        <button className="bg-gray-400 rounded-lg flex text-start justify-between items-center px-4 h-auto w-full">
+                          <h3 className="text-xs text-black font-semibold truncate">
+                            {item.sku}. {item.bookName}
+                          </h3>
+                          <div
+                            onClick={() => cancelHandler(item)}
+                            className="flex items-center text-center text-gray-200 hover:text-white"
+                          >
+                            <ClearIcon className="hover:bg-gray-300 hover:bg-opacity-40 rounded-lg cursor-pointer p-1 ml-4" />
                           </div>
-                          <div className="flex items-center text-center text-gray-200">
-                            <ClearIcon />
-                          </div>
-                        </div>
+                        </button>
                       </li>
                     );
                   }
@@ -163,23 +116,24 @@ export default function Modal({ cart }: { cart: React.ReactNode }) {
                 <tbody>
                   <tr>
                     <td>Jumlah Buku</td>
-                    <td>: 20</td>
+                    <td>: {cartData.length}</td>
                   </tr>
                   <tr>
                     <td>Total Harga</td>
                     <td>
-                      : <span className="font-bold">Rp 21.000</span>
+                      : <span className="font-bold">Rp {totalPrice}</span>
                     </td>
                   </tr>
                 </tbody>
               </table>
+
               <button
+                onClick={() => copyOrder()}
                 data-modal-hide="default-modal"
                 type="button"
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                onClick={() => setShow("hidden")}
               >
-                Checkout
+                Copy Pesanan
               </button>
             </div>
           </div>
